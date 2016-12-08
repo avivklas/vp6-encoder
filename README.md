@@ -17,6 +17,7 @@ docker run -v my_video_files_dir:/videos avivklas/real-flv-encoder \
          -i /videos/input.mp4 \
          -o /videos/output.flv
 ```
+
 or just run the following to see full usage instructions:
 ```bash
 docker run avivklas/real-flv-encoder
