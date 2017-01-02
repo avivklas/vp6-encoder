@@ -30,8 +30,6 @@ quality=3
 bitrate_method="vbr"
 verbose=0
 
-OPTIND=1
-
 while getopts hvi:o:q:b: opt; do
     case $opt in
         h)
