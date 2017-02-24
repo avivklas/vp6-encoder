@@ -21,4 +21,25 @@ docker run -v my_video_files_dir:/videos avivklas/real-flv-encoder \
 or just run the following to see full usage instructions:
 ```bash
 docker run avivklas/real-flv-encoder
+
+Usage: [-h] [-i INPUT] [-o OUTFILE] [-q QUALITY] [-b BITRATE TYPE] [-s SCALE VALUE] [-c CROP VALUE]...
+Encodes almost any video file with vfw to flv
+
+    -h              display this help and exit
+    -i INPUT        the file to be converted
+    -o OUTFILE      the encoded result file path
+    -q QUALITY      the desired output quality (default=3):
+                        1 - lowest (500kbps)
+                        2 - low (800kbps)
+                        3 - medium (1000kbps)
+                        4 - high (1200kbps)
+                        5 - highest (1500kbps)
+    -b BITRATE TYPE the bitrate type to be used (cbr or vbr) (default=vbr).
+    -s SCALE VALUE  scale value in the form of w:h
+    -c CROP VALUE   crop value in the form of w:h
+    -e EXPAND VALUE expand value in the form of w:h:x:y:o:a:r
+                    (read more on http://www.mplayerhq.hu/DOCS/man/en/mplayer.1.html#VIDEO FILTERS)
+    -v              verbose mode. Can be used multiple times for increased
+                    verbosity.
+
 ```

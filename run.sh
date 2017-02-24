@@ -2,7 +2,7 @@
 
 show_help() {
 cat << EOF
-Usage: [-h] [-i INPUT] [-o OUTFILE] [-q QUALITY] [-b BITRATE TYPE]...
+Usage: [-h] [-i INPUT] [-o OUTFILE] [-q QUALITY] [-b BITRATE TYPE] [-s SCALE VALUE] [-c CROP VALUE]...
 Encodes almost any video file with vfw to flv
 
     -h              display this help and exit
@@ -15,6 +15,10 @@ Encodes almost any video file with vfw to flv
                         4 - high (1200kbps)
                         5 - highest (1500kbps)
     -b BITRATE TYPE the bitrate type to be used (cbr or vbr) (default=vbr).
+    -s SCALE VALUE  scale value in the form of w:h
+    -c CROP VALUE   crop value in the form of w:h
+    -e EXPAND VALUE expand value in the form of w:h:x:y:o:a:r
+                    (read more on http://www.mplayerhq.hu/DOCS/man/en/mplayer.1.html#VIDEO FILTERS)
     -v              verbose mode. Can be used multiple times for increased
                     verbosity.
 EOF
@@ -29,9 +33,12 @@ input_file=""
 quality=3
 bitrate_method="vbr"
 verbose=0
+scale_value=""
+crop_value=""
+expand_value=""
 
-while getopts hvi:o:q:b: opt; do
-    case $opt in
+while getopts hvi:o:q:b:s:c:e: opt; do
+    case ${opt} in
         h)
             show_help
             exit 0
@@ -45,6 +52,12 @@ while getopts hvi:o:q:b: opt; do
         q)  quality=$OPTARG
             ;;
         b)  bitrate_method=$OPTARG
+            ;;
+        s)  scale_value=$OPTARG
+            ;;
+        c)  crop_value=$OPTARG
+            ;;
+        e)  expand_value=$OPTARG
             ;;
         *)
             show_help >&2
@@ -101,18 +114,36 @@ case "$bitrate_method" in
         conf_filename="${conf_filename}_vbr.mcf" ;;
 esac
 
-echo $conf_filename
+VP6_CONF_FILE=${CONF_DIR}/${conf_filename}
 
-VP6_CONF_FILE=$CONF_DIR/$conf_filename
+cmd="$MENCODER_PATH $input_file
+  -ovc vfw
+  -xvfwopts codec=$CODECS_DIR/vp6vfw.dll:compdata=$VP6_CONF_FILE
+  -oac mp3lame
+  -lameopts cbr:br=64
+  -af lavcresample=22050
+  -of lavf
+  -o $output_file"
 
-echo $VP6_CONF_FILE
+vf=" -vf flip"
 
-wine $MENCODER_PATH $input_file \
-  -ovc vfw \
-  -xvfwopts codec=$CODECS_DIR/vp6vfw.dll:compdata=$VP6_CONF_FILE \
-  -oac mp3lame \
-  -lameopts cbr:br=64 \
-  -af lavcresample=22050 \
-  -of lavf \
-  -vf flip \
-  -o $output_file
+if [ ! -z "$crop_value" ]
+then
+    vf="$vf,crop=$crop_value"
+fi
+
+if [ ! -z "$scale_value" ]
+then
+    vf="$vf,scale=$scale_value"
+fi
+
+if [ ! -z "$expand_value" ]
+then
+    vf="$vf,expand=$expand_value"
+fi
+
+cmd="$cmd$vf"
+
+echo $cmd
+
+wine ${cmd}
