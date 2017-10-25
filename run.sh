@@ -1,4 +1,7 @@
-#!/bin/sh
+#!/usr/bin/env bash
+
+set -e
+set -u
 
 show_help() {
 cat << EOF
@@ -19,6 +22,8 @@ Encodes almost any video file with vfw to flv
     -c CROP VALUE   crop value in the form of w:h
     -e EXPAND VALUE expand value in the form of w:h:x:y:o:a:r
                     (read more on http://www.mplayerhq.hu/DOCS/man/en/mplayer.1.html#VIDEO FILTERS)
+    -f FPS VALUE    specify an fps. otherwise the input file's fps will be used
+    -n              no audio
     -v              verbose mode. Can be used multiple times for increased
                     verbosity.
 EOF
@@ -36,8 +41,11 @@ verbose=0
 scale_value=""
 crop_value=""
 expand_value=""
+fps=""
+nosound=false
+noskip=false
 
-while getopts hvi:o:q:b:s:c:e: opt; do
+while getopts hvni:o:q:b:s:c:e:f: opt; do
     case ${opt} in
         h)
             show_help
@@ -58,6 +66,12 @@ while getopts hvi:o:q:b:s:c:e: opt; do
         c)  crop_value=$OPTARG
             ;;
         e)  expand_value=$OPTARG
+            ;;
+        f)  fps=$OPTARG
+            ;;
+        n)  nosound=true
+            ;;
+        k)  noskip=true
             ;;
         *)
             show_help >&2
@@ -119,13 +133,24 @@ VP6_CONF_FILE=${CONF_DIR}/${conf_filename}
 cmd="$MENCODER_PATH $input_file
   -ovc vfw
   -xvfwopts codec=$CODECS_DIR/vp6vfw.dll:compdata=$VP6_CONF_FILE
-  -oac mp3lame
-  -lameopts cbr:br=64
-  -af lavcresample=22050
-  -of lavf
+  -forceidx
   -o $output_file"
 
-vf=" -vf flip"
+if [ ${nosound} == true ] ; then
+    cmd="$cmd -nosound"
+else
+    cmd="$cmd -oac copy"
+fi
+
+if [ ! -z "$fps" ]; then
+    cmd="$cmd -fps $fps"
+fi
+
+if [ ${noskip} == true ]; then
+    cmd="$cmd -noskip -mc 0"
+fi
+
+vf="-vf harddup"
 
 if [ ! -z "$crop_value" ]
 then
@@ -142,7 +167,7 @@ then
     vf="$vf,expand=$expand_value"
 fi
 
-cmd="$cmd$vf"
+cmd="$cmd $vf"
 
 echo $cmd
 

@@ -11,6 +11,8 @@ RUN		    add-apt-repository ppa:ubuntu-wine/ppa
 
 RUN		    dpkg --add-architecture i386
 
+RUN         echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections
+
 RUN		    apt-get update && apt-get install -y \
 			    p7zip-full \
 			    wine1.8 \
