@@ -45,7 +45,7 @@ fps=""
 nosound=false
 noskip=false
 
-while getopts hvni:o:q:b:s:c:e:f: opt; do
+while getopts hvnki:o:q:b:s:c:e:f: opt; do
     case ${opt} in
         h)
             show_help
