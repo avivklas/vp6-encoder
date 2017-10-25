@@ -24,6 +24,7 @@ Encodes almost any video file with vfw to flv
                     (read more on http://www.mplayerhq.hu/DOCS/man/en/mplayer.1.html#VIDEO FILTERS)
     -f FPS VALUE    specify an fps. otherwise the input file's fps will be used
     -n              no audio
+    -k              no skip - prevent encoder from skipping duplicate frames
     -v              verbose mode. Can be used multiple times for increased
                     verbosity.
 EOF
