@@ -140,7 +140,7 @@ cmd="$MENCODER_PATH $input_file
 if [ ${nosound} == true ] ; then
     cmd="$cmd -nosound"
 else
-    cmd="$cmd -oac copy"
+    cmd="$cmd -oac mp3lame -lameopts cbr:br=64 -af lavcresample=22050 -of lavf"
 fi
 
 if [ ! -z "$fps" ]; then
