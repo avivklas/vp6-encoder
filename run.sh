@@ -151,7 +151,7 @@ if [ ${noskip} == true ]; then
     cmd="$cmd -noskip -mc 0"
 fi
 
-vf="-vf flip,harddup"
+vf="-vf fixpts,flip,harddup"
 
 if [ ! -z "$crop_value" ]
 then
