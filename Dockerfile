@@ -18,6 +18,8 @@ RUN		    apt-get update && apt-get install -y \
 			    wine1.8 \
 			    winetricks
 
+RUN         wineboot -i
+
 RUN		    mkdir /usr/lib/codecs
 
 RUN		    wget http://mplayerhq.hu/MPlayer/releases/codecs/windows-essential-20071007.zip \
