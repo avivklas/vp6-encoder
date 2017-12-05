@@ -13,14 +13,14 @@ Please use [Github issues](https://github.com/avivklas/real-flv-encoder/issues/n
 Usage:
 ------
 ```bash
-docker run -v my_video_files_dir:/videos avivklas/real-flv-encoder \
+docker run -v my_video_files_dir:/videos avivklas/vp6-encoder \
          -i /videos/input.mp4 \
          -o /videos/output.flv
 ```
 
 or just run the following to see full usage instructions:
 ```bash
-docker run avivklas/real-flv-encoder
+docker run avivklas/vp6-encoder
 
 Usage: [-h] [-i INPUT] [-o OUTFILE] [-q QUALITY] [-b BITRATE TYPE] [-s SCALE VALUE] [-c CROP VALUE]...
 Encodes almost any video file with vfw to flv
