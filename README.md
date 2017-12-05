@@ -1,4 +1,4 @@
-Real FLV Encoder
+VP6 Encoder
 ================
 
 A dockerized tool that uses MEncoder to encode FLV video files with VFW that are natively decoded on every platform without additional codecs. 
