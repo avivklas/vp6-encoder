@@ -151,7 +151,7 @@ if [ ${noskip} == true ]; then
     cmd="$cmd -noskip -mc 0"
 fi
 
-vf="-vf flip,harddup"
+vf="-vf flip"
 
 if [ ! -z "$crop_value" ]
 then
@@ -168,7 +168,7 @@ then
     vf="$vf,expand=$expand_value"
 fi
 
-cmd="$cmd $vf"
+cmd="$cmd $vf,harddup"
 
 echo $cmd
 
