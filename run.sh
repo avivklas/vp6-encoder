@@ -151,24 +151,24 @@ if [ ${noskip} == true ]; then
     cmd="$cmd -noskip -mc 0"
 fi
 
-vf="-vf flip"
+vf="-vf "
 
 if [ ! -z "$crop_value" ]
 then
-    vf="$vf,crop=$crop_value"
+    vf="${vf}crop=$crop_value,"
 fi
 
 if [ ! -z "$scale_value" ]
 then
-    vf="$vf,scale=$scale_value"
+    vf="${vf}scale=$scale_value,"
 fi
 
 if [ ! -z "$expand_value" ]
 then
-    vf="$vf,expand=$expand_value"
+    vf="${vf}expand=$expand_value,"
 fi
 
-cmd="$cmd $vf,harddup"
+cmd="$cmd ${vf}harddup,flip"
 
 echo $cmd
 
