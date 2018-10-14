@@ -140,7 +140,7 @@ cmd="$MENCODER_PATH $input_file
 if [ ${nosound} == true ] ; then
     cmd="$cmd -nosound"
 else
-    cmd="$cmd -oac mp3lame -lameopts cbr:br=64 -af lavcresample=22050 -of lavf"
+    cmd="$cmd -oac mp3lame -lameopts cbr:br=64 -af lavcresample=22050"
 fi
 
 if [ ! -z "$fps" ]; then
@@ -168,7 +168,7 @@ then
     vf="${vf}expand=$expand_value,"
 fi
 
-cmd="$cmd ${vf}harddup,flip"
+cmd="$cmd ${vf}harddup"
 
 echo $cmd
 
