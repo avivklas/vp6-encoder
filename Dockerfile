@@ -26,10 +26,10 @@ RUN		    wget http://mplayerhq.hu/MPlayer/releases/codecs/windows-essential-2007
 			    && unzip windows-essential-20071007.zip \
 			    && cp windows-essential-20071007/* /usr/lib/codecs/
 
-RUN		    wget -O MPlayer-generic.7za http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/r37905%2Bg1f5630a/MPlayer-generic-r37905%2Bg1f5630a.7z \
+RUN		    wget -O MPlayer-generic.7za http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/r38116+gf4cf6ba8c9/MPlayer-generic-r38116+gf4cf6ba8c9.7z \
 			    && 7za x MPlayer-generic.7za
 
-RUN		    mv MPlayer-generic-r37905+g1f5630a /var/opt/MPlayer
+RUN		    mv MPlayer-generic-r38116+gf4cf6ba8c9 /var/opt/MPlayer
 
 COPY		vp6conf /usr/lib/vp6conf
 
