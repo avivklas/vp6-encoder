@@ -140,7 +140,7 @@ cmd="$MENCODER_PATH $input_file
 if [ ${nosound} == true ] ; then
     cmd="$cmd -nosound"
 else
-    cmd="$cmd -of lavf -oac mp3lame -ovc lavc -lavcopts vcodec=flv:vbitrate=800:acodec=libmp3lame:abitrate=96"
+    cmd="$cmd -of lavf -oac mp3lame -lavcopts vcodec=flv:vbitrate=800:acodec=libmp3lame:abitrate=96"
 fi
 
 if [ ! -z "$fps" ]; then
@@ -168,7 +168,7 @@ then
     vf="${vf}expand=$expand_value,"
 fi
 
-cmd="$cmd ${vf}harddup"
+cmd="$cmd ${vf}harddup,flip"
 
 echo $cmd
 
